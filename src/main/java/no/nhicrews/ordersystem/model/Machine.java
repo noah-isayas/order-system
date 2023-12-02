@@ -1,15 +1,16 @@
 package no.nhicrews.ordersystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import java.util.List;
 
-@Getter
-@Setter
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -18,12 +19,14 @@ public class Machine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Model cant be blank")
+    @Size(max = 100, message = "Model name cannot be longer than 100 characters")
     private String model;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @OneToMany(mappedBy = "machine")
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Subassembly> subassemblies;
 }

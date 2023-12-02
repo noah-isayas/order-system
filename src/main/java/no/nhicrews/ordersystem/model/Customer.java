@@ -1,15 +1,17 @@
 package no.nhicrews.ordersystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import java.util.List;
 
-@Getter
-@Setter
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -17,13 +19,19 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Please fill out name")
+    @Size(max = 100, message = "Name cannot be longer than 100 characters")
     private String name;
+
+    @NotBlank(message = "Please fill out email")
+    @Email(message = "Invalid email address")
     private String email;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Address> addresses;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
 }

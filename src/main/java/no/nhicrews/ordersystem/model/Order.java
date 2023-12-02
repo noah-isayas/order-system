@@ -1,16 +1,13 @@
 package no.nhicrews.ordersystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -20,12 +17,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Date cant be null")
     private LocalDate orderDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Machine> machines;
 }

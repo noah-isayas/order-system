@@ -1,13 +1,14 @@
 package no.nhicrews.ordersystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+
+
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -17,10 +18,15 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Please fill out street")
+    @Size(max = 100, message = "Street name cannot be longer than 100 characters")
     private String street;
+
+    @NotBlank(message = "Please fill out city")
+    @Size(max = 50, message = "City name cannot be longer than 50 characters")
     private String city;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 }

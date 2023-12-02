@@ -1,13 +1,15 @@
 package no.nhicrews.ordersystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import java.util.List;
-@Getter @Setter
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -15,12 +17,15 @@ public class Subassembly {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Please fill out a name")
+    @Size(max = 50, message = "Name cant be longer than 50 characters")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     private Machine machine;
 
-    @OneToMany(mappedBy = "subassembly")
+    @OneToMany(mappedBy = "subassembly", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Part> parts;
 }
