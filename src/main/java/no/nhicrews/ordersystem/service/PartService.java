@@ -1,5 +1,6 @@
 package no.nhicrews.ordersystem.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import no.nhicrews.ordersystem.model.Part;
 import no.nhicrews.ordersystem.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +17,28 @@ public class PartService {
         this.partRepository = partRepository;
     }
     public Part addPart(Part part) {
-        return null;
+        return partRepository.save(part);
     }
 
     public Part getPartById(Long id) {
-        return null;
+        return partRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("couldnt find part with ID" + id));
     }
 
     public Page<Part> getAllParts(Pageable pageable) {
-        return null;
+        return partRepository.findAll(pageable);
     }
 
     public Part updatePart(Long id, Part updatedPart) {
-        return null;
+        return partRepository.findById(id).map(part -> {
+            part.setPartNumber(updatedPart.getPartNumber());
+            return partRepository.save(part);
+        }).orElseThrow(() -> new EntityNotFoundException("couldnt find part with ID" + id));
     }
 
     public void deletePart(Long id) {
+        if (!partRepository.existsById(id)){
+            throw new EntityNotFoundException("couldnt find part with ID" + id);
+        }
+        partRepository.deleteById(id);
     }
 }

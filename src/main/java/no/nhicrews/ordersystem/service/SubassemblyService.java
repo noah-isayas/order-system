@@ -1,5 +1,6 @@
 package no.nhicrews.ordersystem.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import no.nhicrews.ordersystem.model.Subassembly;
 import no.nhicrews.ordersystem.repository.SubassemblyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +17,27 @@ public class SubassemblyService {
         this.subassemblyRepository = subassemblyRepository;
     }
     public Subassembly addSubassembly(Subassembly subassembly) {
-        return null;
+        return subassemblyRepository.save(subassembly);
     }
 
     public Subassembly getSubassemblyById(Long id) {
-        return null;
+        return subassemblyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Couldnt find subassembly with ID" + id));
     }
 
     public Page<Subassembly> getAllSubassemblies(Pageable pageable) {
-        return null;
+        return subassemblyRepository.findAll(pageable);
     }
 
     public Subassembly updateSubassembly(Long id, Subassembly updatedSubassembly) {
-        return null;
+        return subassemblyRepository.findById(id).map(subassembly -> {
+            subassembly.setName(updatedSubassembly.getName());
+            return subassemblyRepository.save(subassembly);
+        }).orElseThrow(() -> new EntityNotFoundException("Couldnt find subassembly with ID" + id));
     }
 
     public void deleteSubassembly(Long id) {
+        if (!subassemblyRepository.existsById(id)) {
+            throw new EntityNotFoundException("Couldnt find subassembly with ID" + id);
+        }
     }
 }

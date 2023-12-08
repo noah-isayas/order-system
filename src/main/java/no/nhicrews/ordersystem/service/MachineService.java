@@ -1,5 +1,6 @@
 package no.nhicrews.ordersystem.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import no.nhicrews.ordersystem.model.Machine;
 import no.nhicrews.ordersystem.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +18,27 @@ public class MachineService {
     }
 
     public Machine addMachine(Machine machine){
-        return null;
+        return machineRepository.save(machine);
     }
     public Machine getMachineById(Long id) {
-        return null;
+        return machineRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("no machine found with id" + id));
     }
 
     public Page<Machine> getAllMachines(Pageable pageable) {
-        return null;
+        return machineRepository.findAll(pageable);
     }
 
     public Machine updateMachine(Long id, Machine updatedMachine) {
-        return null;
+        return machineRepository.findById(id).map(machine -> {
+            machine.setModel(updatedMachine.getModel());
+            return machineRepository.save(machine);
+        }).orElseThrow(() -> new EntityNotFoundException("no machine found with id" + id));
     }
 
     public void deleteMachine(Long id) {
-
+        if (!machineRepository.existsById(id)) {
+            throw new EntityNotFoundException("no machine found with id" + id);
+        }
+        machineRepository.deleteById(id);
     }
 }
