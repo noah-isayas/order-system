@@ -12,17 +12,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class OrderControllerIntegrationTest {
+
+    // Injecting MockMvc in order to simulate HTTP requests and responses
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void getAllOrdersTest() throws Exception {
+        // Tests if the GET request to /orders returns all orders correctly
         mockMvc.perform(get("/orders"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.content").isArray());
     }
 
     @Test
     public void addOrderTest() throws Exception {
+        // Tests the addition of a new order using the post method
         String jsonOrder = "{\"orderDate\": \"2023-12-12\"}";
         mockMvc.perform(post("/orders").contentType(MediaType.APPLICATION_JSON).content(jsonOrder))
                 .andExpect(status().isCreated())

@@ -13,11 +13,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class MachineControllerIntegrationTest {
+
+    // Injecting MockMvc in order to simulate HTTP requests and responses
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void getAllMachinesTest() throws Exception {
+        // Tests if the GET request to /machines returns all machines correctly
         mockMvc.perform(get("/machines"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
@@ -25,6 +28,7 @@ public class MachineControllerIntegrationTest {
 
     @Test
     public void addMachineTest() throws Exception {
+        // Tests the addition of a new machine using the post method
         String jsonMachine = "{\"model\": \"Vaporizor 3000\"}";
         mockMvc.perform(post("/machines").contentType(MediaType.APPLICATION_JSON).content(jsonMachine))
                 .andExpect(status().isCreated())

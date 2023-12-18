@@ -12,16 +12,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CustomerControllerIntegrationTest {
+
+    //// Injecting MockMvc in order to simulate HTTP requests and responses
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void getAllCustomersTest () throws Exception {
+        // Tests if the GET request to /customer returns all customers correctly
         mockMvc.perform(get("/customers")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
     }
     @Test
     public void addCustomerTest() throws Exception {
+        // Tests the addition of a new customer using the post method
         String jsonCustomer = "{\"name\": \"ola nordmann\", \"email\": \"ola@nordmann.com\"}";
         mockMvc.perform(post("/customers")
                         .contentType(MediaType.APPLICATION_JSON).content(jsonCustomer))

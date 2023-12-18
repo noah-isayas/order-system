@@ -20,14 +20,19 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class AddressServiceTest {
 
+    //Mocking in order to simulate repository interactions without relying on the actual DB
     @MockBean
     private AddressRepository addressRepository;
 
+    //AddressService is injected into the test class using @Autowired to test its business logic
     @Autowired
     private AddressService addressService;
 
+
     @Test
     public void getAddressByIdShouldReturnAddress() {
+        //This method tests getAddressById in AddressService.
+        // It sets up a mock address, retrieves it by ID, and asserts the returned address matches the mock.
         Long addressId = 1L;
         Address mockAddress = new Address();
 
@@ -44,8 +49,11 @@ public class AddressServiceTest {
         assertEquals("Hamar", foundAddress.getCity());
         assertEquals("Testroad 123", foundAddress.getStreet());
     }
+
     @Test
     public void AddressShouldBeDeletedSuccessfully() {
+        //This method ensures the service correctly handles deletion.
+        // It mocks the existence of an address and verifies the repository's deleteById method is called.
         Long addressId = 1L;
 
         when(addressRepository.existsById(addressId)).thenReturn(true);
@@ -58,6 +66,9 @@ public class AddressServiceTest {
 
     @Test
     public void AddressShouldBeUpdated() {
+        //This test checks if AddressService properly updates an address.
+        // It mocks finding an existing address and saving the updated address,
+        // then asserts that the address's properties are updated as expected.
         Address mockAddress = new Address();
         mockAddress.setStreet("prev street");
         mockAddress.setCity("prev city");

@@ -13,11 +13,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class PartControllerIntegrationTest {
 
+    // Injecting MockMvc in order to simulate HTTP requests and responses
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void getAllPartsTest() throws Exception {
+        // Tests if the GET request to /parts returns all parts correctly
         mockMvc.perform(get("/parts"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
@@ -25,6 +27,7 @@ public class PartControllerIntegrationTest {
 
     @Test
     public void addPartTest() throws Exception {
+        // Tests the addition of a new part using the post method
         String jsonPart = "{\"partNumber\": \"3636\"}";
         mockMvc.perform(post("/parts")
                         .contentType(MediaType.APPLICATION_JSON)

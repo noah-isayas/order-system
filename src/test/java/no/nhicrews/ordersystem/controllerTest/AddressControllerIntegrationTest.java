@@ -14,22 +14,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class AddressControllerIntegrationTest {
 
+    // Injecting MockMvc in order to simulate HTTP requests and responses
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void getAllAddressesTest() throws Exception {
+        // Tests if the GET request to /addresses returns all addresses correctly
         mockMvc.perform(get("/addresses"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists());
     }
     @Test
     public void addressNotFoundTest() throws Exception {
+        // Tests if the GET request to a non-existing address ID returns a 404 status
         Long falseId = 364L;
         mockMvc.perform(get("/addresses/" + falseId)).andExpect(status().isNotFound());
     }
     @Test
     public void addAddressTest () throws Exception {
+        // Tests the addition of a new address using the post method
         String jsonAddress = "{\"street\": \"Test street\", \"city\": \"Hamar\"}";
         mockMvc.perform(post("/addresses").contentType(MediaType.APPLICATION_JSON)
                 .content(jsonAddress))

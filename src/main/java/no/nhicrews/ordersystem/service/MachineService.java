@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MachineService {
+
+    //Injection of machinrepository in order to interact with the db
     private final MachineRepository machineRepository;
 
     @Autowired
@@ -17,17 +19,22 @@ public class MachineService {
         this.machineRepository = machineRepository;
     }
 
+    //adds a machine to the DB and returns it
     public Machine addMachine(Machine machine){
         return machineRepository.save(machine);
     }
+
+    //Returns a machine by its id, or throws exception if not found
     public Machine getMachineById(Long id) {
         return machineRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("no machine found with id" + id));
     }
 
+    // Returns a paginated list of machines
     public Page<Machine> getAllMachines(Pageable pageable) {
         return machineRepository.findAll(pageable);
     }
 
+    //Updates an existing machine, and returns it
     public Machine updateMachine(Long id, Machine updatedMachine) {
         return machineRepository.findById(id).map(machine -> {
             machine.setModel(updatedMachine.getModel());
@@ -35,6 +42,7 @@ public class MachineService {
         }).orElseThrow(() -> new EntityNotFoundException("no machine found with id" + id));
     }
 
+    //Deletes machine by its id, or throws exception if not found
     public void deleteMachine(Long id) {
         if (!machineRepository.existsById(id)) {
             throw new EntityNotFoundException("no machine found with id" + id);
