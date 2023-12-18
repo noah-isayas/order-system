@@ -1,6 +1,7 @@
 package no.nhicrews.ordersystem.controller;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import no.nhicrews.ordersystem.model.Address;
 import no.nhicrews.ordersystem.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,12 @@ public class AddressController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Address> getAddressById(@PathVariable Long id) {
-        return ResponseEntity.ok(addressService.getAddressById(id));
+        try {
+            Address address = addressService.getAddressById(id);
+            return ResponseEntity.ok(address);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
     @PostMapping
     public ResponseEntity<Address> addAddress(@RequestBody Address address) {

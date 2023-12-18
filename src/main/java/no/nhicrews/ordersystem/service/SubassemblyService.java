@@ -37,7 +37,8 @@ public class SubassemblyService {
 
     public void deleteSubassembly(Long id) {
         if (!subassemblyRepository.existsById(id)) {
-            throw new EntityNotFoundException("Couldnt find subassembly with ID" + id);
+            throw new EntityNotFoundException("Couldn't find subassembly with ID " + id);
         }
+        subassemblyRepository.deleteById(id);
     }
 }

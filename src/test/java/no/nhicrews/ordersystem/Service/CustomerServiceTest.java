@@ -25,7 +25,7 @@ public class CustomerServiceTest {
     CustomerService customerService;
 
     @Test
-    public void whenAddCustomer_thenCustomerShouldBeSaved() {
+    public void CustomerShouldBeSavedWhenAddingg() {
         Customer customer = new Customer();
         customer.setName("John Doe");
         customer.setEmail("john.doe@example.com");
@@ -39,7 +39,7 @@ public class CustomerServiceTest {
         assertEquals("john.doe@example.com", savedCustomer.getEmail());
     }
     @Test
-    public void whenGetCustomerById_thenCustomerShouldBeReturned() {
+    public void GettingCustomerByIdShouldGetCorrectCustomer() {
         Long customerId = 1L;
         Customer mockCustomer = new Customer();
 
@@ -58,7 +58,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void whenGetCustomerById_withNonExistentId_thenThrowEntityNotFoundException() {
+    public void NonExsistingIdShouldThrowException() {
         Long customerId = 2L;
         when(customerRepository.findById(customerId)).thenReturn(Optional.empty());
 
