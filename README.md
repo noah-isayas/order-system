@@ -1,9 +1,16 @@
-Due to unforeseen circumstances beyond my control, 
-this project was completed independently, 
-adhering to the guidelines and objectives outlined in the assignment.
-
 Kandidatnr.:	2032
 Gruppenummer:   38
+
+Difficulties
+- Due to unforeseen circumstances beyond my control,
+  this project was completed independently,
+  adhering to the guidelines and objectives outlined in the assignment.
+- I was not able to implement more functionality other than (Create an address and add it to a customer )
+due to the amount of work I already had
+- Writing comprehensive tests also became a difficulty for the same reason.
+- Mock data was also something I should have implemented, but I was told this was time-consuming, 
+but i later learned this would have been for the better. I apologize for any extra work this may cause you.
+
 
 
 Introduction
