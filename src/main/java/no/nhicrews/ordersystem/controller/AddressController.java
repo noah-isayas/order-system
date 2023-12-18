@@ -23,15 +23,16 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    //Handles the get requests to /addresses, returning a page of addresses
+
     @GetMapping
     public ResponseEntity<Page<Address>> getAllAddresses(Pageable pageable) {
+        //Handles the get requests to /addresses, returning a page of addresses
         return ResponseEntity.ok(addressService.getAllAddresses(pageable));
     }
 
-    //handles the get request to /addresses/{id}, returning it by ID or 404 if it doesn't exist
     @GetMapping("/{id}")
     public ResponseEntity<Address> getAddressById(@PathVariable Long id) {
+        //handles the get request to /addresses/{id}, returning it by ID or 404 if it doesn't exist
         try {
             Address address = addressService.getAddressById(id);
             return ResponseEntity.ok(address);
@@ -40,24 +41,24 @@ public class AddressController {
         }
     }
 
-    //Handles post requests to /addresses, and adding a new address
-    //also returns it
     @PostMapping
     public ResponseEntity<Address> addAddress(@RequestBody Address address) {
+        //Handles post requests to /addresses, and adding a new address
+        //also returns it
         Address newAddress = addressService.addAddress(address);
         return ResponseEntity.status(HttpStatus.CREATED).body(newAddress);
     }
 
-    //Handles the put request, and updates the address
     @PutMapping("/{id}")
     public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
+        //Handles the put request, and updates the address
         Address updatedAddress = addressService.updateAddress(id, address);
         return ResponseEntity.ok(updatedAddress);
     }
 
-    //Handles delete requests, and deletes address with corresponding ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
+        //Handles delete requests, and deletes address with corresponding ID
         addressService.deleteAddress(id);
         return ResponseEntity.noContent().build();
     }
