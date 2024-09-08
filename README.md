@@ -1,18 +1,3 @@
-Kandidatnr.:	2032
-Gruppenummer:   38
-
-Difficulties
-- Due to unforeseen circumstances beyond my control,
-  this project was completed independently,
-  adhering to the guidelines and objectives outlined in the assignment.
-- I was not able to implement more functionality other than (Create an address and add it to a customer )
-i choose to prioritize my time on polishing what was required. 
-- Writing comprehensive tests also became a difficulty for the same reason.
-- Mock data was also something I should have implemented, but I was told this was time-consuming, 
-but i later learned this would have been for the better. I apologize for any extra work this may cause you.
-
-
-
 Introduction
  - Welcome to my order system application! This is a REST-API based solution for managing both orders, customers, addresses 
  - and more for your factory. This spring Boot application offers a list of functionalities to efficiently
